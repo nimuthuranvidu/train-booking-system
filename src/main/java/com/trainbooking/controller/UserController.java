@@ -1,5 +1,6 @@
 package com.trainbooking.controller;
 
+import com.trainbooking.dto.UserResponseDTO;
 import com.trainbooking.entity.User;
 import com.trainbooking.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,15 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
+    public UserResponseDTO register(@RequestBody User user) {
+
+        User savedUser = userService.register(user);
+
+        return new UserResponseDTO(
+                savedUser.getId(),
+                savedUser.getName(),
+                savedUser.getEmail(),
+                savedUser.getRole()
+        );
     }
 }
