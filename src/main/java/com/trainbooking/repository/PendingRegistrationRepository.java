@@ -8,5 +8,7 @@ import java.util.Optional;
 public interface PendingRegistrationRepository
         extends JpaRepository<PendingRegistration, Long> {
 
-    Optional<PendingRegistration> findByEmail(String email);
+    Optional<PendingRegistration> findTopByEmailOrderByIdDesc(
+            String email
+    );
 }

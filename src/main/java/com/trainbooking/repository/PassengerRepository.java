@@ -13,4 +13,10 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
             Long bookingId,
             Long seatId
     );
+
+    boolean existsByBookingIdAndSeatIdAndIdNot(
+            Long bookingId,
+            Long seatId,
+            Long passengerId
+    );
 }

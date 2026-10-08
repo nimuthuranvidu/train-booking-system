@@ -13,6 +13,8 @@ public interface BookingSeatRepository
 
     List<BookingSeat> findByBookingId(Long bookingId);
 
+    boolean existsBySeatId(Long seatId);
+
     @Query("""
             SELECT COUNT(bs) > 0
             FROM BookingSeat bs

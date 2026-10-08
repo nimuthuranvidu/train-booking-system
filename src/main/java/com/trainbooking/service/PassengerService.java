@@ -2,7 +2,6 @@ package com.trainbooking.service;
 
 import com.trainbooking.dto.PassengerRequest;
 import com.trainbooking.entity.Booking;
-import com.trainbooking.entity.BookingSeat;
 import com.trainbooking.entity.Passenger;
 import com.trainbooking.entity.Seat;
 import com.trainbooking.repository.BookingRepository;
@@ -33,6 +32,7 @@ public class PassengerService {
         this.bookingSeatRepository = bookingSeatRepository;
     }
 
+    // ADD passenger
     public Passenger addPassenger(PassengerRequest request) {
 
         Booking booking = bookingRepository.findById(
@@ -45,24 +45,8 @@ public class PassengerService {
         ).orElseThrow(() ->
                 new RuntimeException("Seat not found"));
 
-        // Check whether this seat was selected for this booking
-        boolean seatSelectedForBooking =
-                bookingSeatRepository
-                        .findByBookingId(booking.getId())
-                        .stream()
-                        .anyMatch(bookingSeat ->
-                                bookingSeat.getSeat()
-                                        .getId()
-                                        .equals(seat.getId())
-                        );
+        validateSeatSelectedForBooking(booking, seat);
 
-        if (!seatSelectedForBooking) {
-            throw new RuntimeException(
-                    "This seat was not selected for this booking"
-            );
-        }
-
-        // Prevent assigning the same seat to another passenger
         if (passengerRepository.existsByBookingIdAndSeatId(
                 booking.getId(),
                 seat.getId())) {
@@ -84,11 +68,99 @@ public class PassengerService {
         return passengerRepository.save(passenger);
     }
 
+    // VIEW all passengers
     public List<Passenger> getAllPassengers() {
         return passengerRepository.findAll();
     }
 
+    // VIEW passengers by booking
     public List<Passenger> getPassengersByBooking(Long bookingId) {
+
+        if (!bookingRepository.existsById(bookingId)) {
+            throw new RuntimeException("Booking not found");
+        }
+
         return passengerRepository.findByBookingId(bookingId);
+    }
+
+    // UPDATE passenger
+    public Passenger updatePassenger(
+            Long id,
+            PassengerRequest request) {
+
+        Passenger existingPassenger =
+                passengerRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Passenger not found"));
+
+        Booking booking = bookingRepository.findById(
+                request.getBookingId()
+        ).orElseThrow(() ->
+                new RuntimeException("Booking not found"));
+
+        Seat seat = seatRepository.findById(
+                request.getSeatId()
+        ).orElseThrow(() ->
+                new RuntimeException("Seat not found"));
+
+        validateSeatSelectedForBooking(booking, seat);
+
+        boolean seatUsedByAnotherPassenger =
+                passengerRepository
+                        .existsByBookingIdAndSeatIdAndIdNot(
+                                booking.getId(),
+                                seat.getId(),
+                                id
+                        );
+
+        if (seatUsedByAnotherPassenger) {
+            throw new RuntimeException(
+                    "This seat is already assigned to another passenger"
+            );
+        }
+
+        existingPassenger.setName(request.getName());
+        existingPassenger.setAge(request.getAge());
+        existingPassenger.setGender(request.getGender());
+        existingPassenger.setNic(request.getNic());
+        existingPassenger.setBooking(booking);
+        existingPassenger.setSeat(seat);
+
+        return passengerRepository.save(existingPassenger);
+    }
+
+    // DELETE passenger
+    public void deletePassenger(Long id) {
+
+        Passenger passenger =
+                passengerRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Passenger not found"));
+
+        passengerRepository.delete(passenger);
+    }
+
+    // Check whether the selected seat belongs to this booking
+    private void validateSeatSelectedForBooking(
+            Booking booking,
+            Seat seat) {
+
+        boolean seatSelectedForBooking =
+                bookingSeatRepository
+                        .findByBookingId(booking.getId())
+                        .stream()
+                        .anyMatch(bookingSeat ->
+                                bookingSeat.getSeat()
+                                        .getId()
+                                        .equals(seat.getId())
+                        );
+
+        if (!seatSelectedForBooking) {
+            throw new RuntimeException(
+                    "This seat was not selected for this booking"
+            );
+        }
     }
 }

@@ -1,7 +1,11 @@
 package com.trainbooking.controller;
 
+import com.trainbooking.config.JwtService;
+import com.trainbooking.dto.LoginRequest;
+import com.trainbooking.dto.LoginResponseDTO;
 import com.trainbooking.dto.OtpVerifyRequest;
 import com.trainbooking.dto.RegisterRequest;
+import com.trainbooking.dto.ResetPasswordRequest;
 import com.trainbooking.entity.PendingRegistration;
 import com.trainbooking.entity.User;
 import com.trainbooking.repository.PendingRegistrationRepository;
@@ -9,8 +13,6 @@ import com.trainbooking.repository.UserRepository;
 import com.trainbooking.service.OtpService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import com.trainbooking.dto.LoginRequest;
-import com.trainbooking.dto.ResetPasswordRequest;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +23,7 @@ public class AuthController {
     private final OtpService otpService;
     private final UserRepository userRepository;
     private final PendingRegistrationRepository pendingRegistrationRepository;
+    private final JwtService jwtService;
 
     private final BCryptPasswordEncoder passwordEncoder =
             new BCryptPasswordEncoder();
@@ -28,13 +31,19 @@ public class AuthController {
     public AuthController(
             OtpService otpService,
             UserRepository userRepository,
-            PendingRegistrationRepository pendingRegistrationRepository) {
+            PendingRegistrationRepository pendingRegistrationRepository,
+            JwtService jwtService) {
 
         this.otpService = otpService;
         this.userRepository = userRepository;
         this.pendingRegistrationRepository =
                 pendingRegistrationRepository;
+        this.jwtService = jwtService;
     }
+
+    // =========================
+    // CUSTOMER REGISTRATION
+    // =========================
 
     @PostMapping("/register")
     public String register(
@@ -81,6 +90,10 @@ public class AuthController {
                 + request.getEmail();
     }
 
+    // =========================
+    // SEND OTP
+    // =========================
+
     @PostMapping("/send-otp")
     public String sendOtp(
             @RequestParam String email) {
@@ -90,35 +103,39 @@ public class AuthController {
         return "OTP sent successfully to " + email;
     }
 
+    // =========================
+    // VERIFY REGISTRATION OTP
+    // =========================
+
     @PostMapping("/verify-otp")
     public String verifyOtp(
             @RequestBody OtpVerifyRequest request) {
 
-        // Verify the OTP
         otpService.verifyOtp(
                 request.getEmail(),
                 request.getOtp()
         );
 
-        // Find pending registration
         PendingRegistration pendingRegistration =
                 pendingRegistrationRepository
-                        .findByEmail(request.getEmail())
+                        .findTopByEmailOrderByIdDesc(
+                                request.getEmail()
+                        )
                         .orElseThrow(() ->
                                 new RuntimeException(
                                         "No pending registration found"
                                 ));
 
-        // Check registration expiry
         if (LocalDateTime.now()
-                .isAfter(pendingRegistration.getExpiresAt())) {
+                .isAfter(
+                        pendingRegistration.getExpiresAt()
+                )) {
 
             throw new RuntimeException(
                     "Registration has expired"
             );
         }
 
-        // Create new customer
         User user = new User();
 
         user.setName(
@@ -131,22 +148,25 @@ public class AuthController {
 
         user.setRole("CUSTOMER");
 
-        // Save the BCrypt encrypted password
         user.setPassword(
                 pendingRegistration.getPassword()
         );
 
         userRepository.save(user);
 
-        // Remove temporary registration
         pendingRegistrationRepository.delete(
                 pendingRegistration
         );
 
         return "Registration successful. Customer account created.";
     }
+
+    // =========================
+    // LOGIN
+    // =========================
+
     @PostMapping("/login")
-    public String login(
+    public LoginResponseDTO login(
             @RequestBody LoginRequest request) {
 
         User user = userRepository
@@ -163,13 +183,31 @@ public class AuthController {
                 );
 
         if (!passwordMatches) {
+
             throw new RuntimeException(
                     "Invalid email or password"
             );
         }
 
-        return "Login successful";
+        // Generate JWT token
+        String token = jwtService.generateToken(
+                user.getEmail(),
+                user.getRole()
+        );
+
+        return new LoginResponseDTO(
+                "Login successful",
+                token,
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getRole()
+        );
     }
+
+    // =========================
+    // FORGOT PASSWORD
+    // =========================
 
     @PostMapping("/forgot-password")
     public String forgotPassword(
@@ -187,17 +225,19 @@ public class AuthController {
         return "OTP sent successfully to " + email;
     }
 
+    // =========================
+    // RESET PASSWORD
+    // =========================
+
     @PostMapping("/reset-password")
     public String resetPassword(
             @RequestBody ResetPasswordRequest request) {
 
-        // Verify OTP
         otpService.verifyOtp(
                 request.getEmail(),
                 request.getOtp()
         );
 
-        // Validate new password
         if (request.getNewPassword() == null ||
                 request.getNewPassword().isBlank()) {
 
@@ -206,7 +246,6 @@ public class AuthController {
             );
         }
 
-        // Find user
         User user = userRepository
                 .findByEmail(request.getEmail())
                 .orElseThrow(() ->
@@ -214,13 +253,11 @@ public class AuthController {
                                 "No account found with this email"
                         ));
 
-        // Encrypt new password
         String encodedPassword =
                 passwordEncoder.encode(
                         request.getNewPassword()
                 );
 
-        // Update password
         user.setPassword(encodedPassword);
 
         userRepository.save(user);

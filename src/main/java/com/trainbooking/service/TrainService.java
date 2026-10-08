@@ -24,6 +24,25 @@ public class TrainService {
         return trainRepository.save(train);
     }
 
+    public Train updateTrain(Long id, Train updatedTrain) {
+
+        Train existingTrain = trainRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Train not found"));
+
+        existingTrain.setTrainNumber(updatedTrain.getTrainNumber());
+        existingTrain.setName(updatedTrain.getName());
+
+        return trainRepository.save(existingTrain);
+    }
+
+    public void deleteTrain(Long id) {
+
+        Train train = trainRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Train not found"));
+
+        trainRepository.delete(train);
+    }
+
     public List<Train> getAllTrains() {
         return trainRepository.findAll();
     }

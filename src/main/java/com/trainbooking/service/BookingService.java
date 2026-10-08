@@ -1,75 +1,86 @@
 package com.trainbooking.service;
 
-import java.util.List;
-
-import com.trainbooking.dto.BookingRequest;
 import com.trainbooking.entity.Booking;
 import com.trainbooking.entity.Schedule;
 import com.trainbooking.entity.User;
 import com.trainbooking.repository.BookingRepository;
-import com.trainbooking.repository.BookingSeatRepository;
-import com.trainbooking.repository.PassengerRepository;
 import com.trainbooking.repository.ScheduleRepository;
 import com.trainbooking.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class BookingService {
 
     private final BookingRepository bookingRepository;
-    private final BookingSeatRepository bookingSeatRepository;
-    private final PassengerRepository passengerRepository;
     private final UserRepository userRepository;
     private final ScheduleRepository scheduleRepository;
 
     public BookingService(
             BookingRepository bookingRepository,
-            BookingSeatRepository bookingSeatRepository,
-            PassengerRepository passengerRepository,
             UserRepository userRepository,
             ScheduleRepository scheduleRepository) {
 
         this.bookingRepository = bookingRepository;
-        this.bookingSeatRepository = bookingSeatRepository;
-        this.passengerRepository = passengerRepository;
         this.userRepository = userRepository;
         this.scheduleRepository = scheduleRepository;
     }
 
-    public Booking addBooking(BookingRequest request) {
+    public Booking createBooking(
+            Long userId,
+            Long scheduleId,
+            LocalDate travelDate,
+            double totalAmount) {
 
-        User user = userRepository.findById(request.getUserId())
+        User user = userRepository
+                .findById(userId)
                 .orElseThrow(() ->
                         new RuntimeException("User not found"));
 
-        Schedule schedule = scheduleRepository.findById(
-                request.getScheduleId()
-        ).orElseThrow(() ->
-                new RuntimeException("Schedule not found"));
+        Schedule schedule = scheduleRepository
+                .findById(scheduleId)
+                .orElseThrow(() ->
+                        new RuntimeException("Schedule not found"));
 
-        if (request.getTravelDate() == null) {
+        if (travelDate == null) {
             throw new RuntimeException(
-                    "Travel date is required"
-            );
+                    "Travel date is required");
         }
 
-        if (!schedule.getOperatingDays().stream()
-                .anyMatch(day ->
-                        day.getDay()
-                                .equals(request.getTravelDate().getDayOfWeek()))) {
-
+        if (travelDate.isBefore(LocalDate.now())) {
             throw new RuntimeException(
-                    "This schedule does not operate on the selected date"
-            );
+                    "Travel date cannot be in the past");
         }
 
-        Booking booking = new Booking(
-                user,
-                schedule,
-                request.getTravelDate(),
-                "PENDING",
-                request.getTotalAmount()
-        );
+        if (totalAmount <= 0) {
+            throw new RuntimeException(
+                    "Total amount must be greater than 0");
+        }
+
+        DayOfWeek travelDay =
+                travelDate.getDayOfWeek();
+
+        boolean operating =
+                schedule.getOperatingDays()
+                        .stream()
+                        .anyMatch(day ->
+                                day.getDay() == travelDay);
+
+        if (!operating) {
+            throw new RuntimeException(
+                    "Train does not operate on " + travelDay);
+        }
+
+        Booking booking = new Booking();
+
+        booking.setUser(user);
+        booking.setSchedule(schedule);
+        booking.setTravelDate(travelDate);
+        booking.setStatus("PENDING");
+        booking.setTotalAmount(totalAmount);
 
         return bookingRepository.save(booking);
     }
@@ -78,35 +89,42 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
+    public List<Booking> getBookingsByUserId(Long userId) {
+
+        if (!userRepository.existsById(userId)) {
+            throw new RuntimeException("User not found");
+        }
+
+        return bookingRepository.findByUserId(userId);
+    }
+
     public Booking confirmBooking(Long bookingId) {
 
-        Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() ->
-                        new RuntimeException("Booking not found"));
+        Booking booking =
+                bookingRepository
+                        .findById(bookingId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Booking not found"));
 
         if ("CANCELLED".equals(booking.getStatus())) {
             throw new RuntimeException(
-                    "Cancelled booking cannot be confirmed"
-            );
+                    "Cancelled booking cannot be confirmed");
         }
 
-        int selectedSeatCount =
-                bookingSeatRepository
-                        .findByBookingId(bookingId)
-                        .size();
+        if (!"PENDING".equals(booking.getStatus())) {
+            throw new RuntimeException(
+                    "Only pending bookings can be confirmed");
+        }
 
         int passengerCount =
-                passengerRepository
-                        .findByBookingId(bookingId)
-                        .size();
+                booking.getPassengers() == null
+                        ? 0
+                        : booking.getPassengers().size();
 
-        if (selectedSeatCount != passengerCount) {
-
+        if (passengerCount == 0) {
             throw new RuntimeException(
-                    "Number of selected seats must equal number of passengers. "
-                            + "Selected seats: " + selectedSeatCount
-                            + ", Passengers: " + passengerCount
-            );
+                    "At least one passenger is required");
         }
 
         booking.setStatus("CONFIRMED");
@@ -116,14 +134,23 @@ public class BookingService {
 
     public Booking cancelBooking(Long bookingId) {
 
-        Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() ->
-                        new RuntimeException("Booking not found"));
+        Booking booking =
+                bookingRepository
+                        .findById(bookingId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Booking not found"));
 
         if ("CANCELLED".equals(booking.getStatus())) {
             throw new RuntimeException(
-                    "Booking is already cancelled"
-            );
+                    "Booking is already cancelled");
+        }
+
+        if (!"PENDING".equals(booking.getStatus()) &&
+                !"CONFIRMED".equals(booking.getStatus())) {
+
+            throw new RuntimeException(
+                    "Only pending or confirmed bookings can be cancelled");
         }
 
         booking.setStatus("CANCELLED");
