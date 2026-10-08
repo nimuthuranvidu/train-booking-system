@@ -1,5 +1,6 @@
 package com.trainbooking.controller;
 
+import com.trainbooking.dto.BookingSeatResponseDTO;
 import com.trainbooking.dto.SeatSelectionRequest;
 import com.trainbooking.entity.BookingSeat;
 import com.trainbooking.service.BookingSeatService;
@@ -13,40 +14,75 @@ public class BookingSeatController {
 
     private final BookingSeatService bookingSeatService;
 
-    public BookingSeatController(BookingSeatService bookingSeatService) {
+    public BookingSeatController(
+            BookingSeatService bookingSeatService) {
+
         this.bookingSeatService = bookingSeatService;
     }
 
     @PostMapping
-    public BookingSeat addBookingSeat(
+    public BookingSeatResponseDTO addBookingSeat(
             @RequestParam Long bookingId,
             @RequestParam Long seatId) {
 
-        return bookingSeatService.addBookingSeat(
-                bookingId,
-                seatId
-        );
+        BookingSeat bookingSeat =
+                bookingSeatService.addBookingSeat(
+                        bookingId,
+                        seatId
+                );
+
+        return convertToResponse(bookingSeat);
     }
 
     @PostMapping("/select")
-    public List<BookingSeat> selectSeats(
+    public List<BookingSeatResponseDTO> selectSeats(
             @RequestBody SeatSelectionRequest request) {
 
-        return bookingSeatService.selectSeats(
-                request.getBookingId(),
-                request.getSeatIds()
-        );
+        return bookingSeatService
+                .selectSeats(
+                        request.getBookingId(),
+                        request.getSeatIds()
+                )
+                .stream()
+                .map(this::convertToResponse)
+                .toList();
     }
 
     @GetMapping
-    public List<BookingSeat> getAllBookingSeats() {
-        return bookingSeatService.getAllBookingSeats();
+    public List<BookingSeatResponseDTO> getAllBookingSeats() {
+
+        return bookingSeatService
+                .getAllBookingSeats()
+                .stream()
+                .map(this::convertToResponse)
+                .toList();
     }
 
     @GetMapping("/booking/{bookingId}")
-    public List<BookingSeat> getSeatsByBooking(
+    public List<BookingSeatResponseDTO> getSeatsByBooking(
             @PathVariable Long bookingId) {
 
-        return bookingSeatService.getSeatsByBooking(bookingId);
+        return bookingSeatService
+                .getSeatsByBooking(bookingId)
+                .stream()
+                .map(this::convertToResponse)
+                .toList();
+    }
+
+    private BookingSeatResponseDTO convertToResponse(
+            BookingSeat bookingSeat) {
+
+        return new BookingSeatResponseDTO(
+                bookingSeat.getId(),
+                bookingSeat.getBooking().getId(),
+                bookingSeat.getSeat().getId(),
+                bookingSeat.getSeat()
+                        .getCoach()
+                        .getCoachNumber(),
+                bookingSeat.getSeat()
+                        .getSeatNumber(),
+                bookingSeat.getSeat()
+                        .getSeatType()
+        );
     }
 }

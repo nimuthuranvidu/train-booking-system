@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import com.trainbooking.entity.Schedule;
+
 
 @Entity
 @Table(name = "bookings")
@@ -17,6 +19,10 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "schedule_id", nullable = false)
+    private Schedule schedule;
 
     @Column(nullable = false)
     private LocalDate travelDate;
@@ -37,8 +43,15 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(User user, LocalDate travelDate, String status, double totalAmount) {
+    public Booking(
+            User user,
+            Schedule schedule,
+            LocalDate travelDate,
+            String status,
+            double totalAmount) {
+
         this.user = user;
+        this.schedule = schedule;
         this.travelDate = travelDate;
         this.status = status;
         this.totalAmount = totalAmount;
@@ -54,6 +67,14 @@ public class Booking {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
     }
 
     public LocalDate getTravelDate() {
@@ -79,6 +100,7 @@ public class Booking {
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
+
     public List<Passenger> getPassengers() {
         return passengers;
     }

@@ -8,7 +8,8 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface BookingSeatRepository extends JpaRepository<BookingSeat, Long> {
+public interface BookingSeatRepository
+        extends JpaRepository<BookingSeat, Long> {
 
     List<BookingSeat> findByBookingId(Long bookingId);
 
@@ -16,11 +17,13 @@ public interface BookingSeatRepository extends JpaRepository<BookingSeat, Long> 
             SELECT COUNT(bs) > 0
             FROM BookingSeat bs
             WHERE bs.seat.id = :seatId
+            AND bs.booking.schedule.id = :scheduleId
             AND bs.booking.travelDate = :travelDate
             AND bs.booking.status <> 'CANCELLED'
             """)
-    boolean existsBySeatIdAndTravelDate(
+    boolean existsBySeatIdAndScheduleIdAndTravelDate(
             @Param("seatId") Long seatId,
+            @Param("scheduleId") Long scheduleId,
             @Param("travelDate") LocalDate travelDate
     );
 }

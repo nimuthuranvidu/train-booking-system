@@ -37,19 +37,23 @@ public class SeatAvailabilityService {
                 .orElseThrow(() ->
                         new RuntimeException("Schedule not found"));
 
-        List<Seat> seats = seatRepository.findByCoachTrainId(
-                schedule.getTrain().getId()
-        );
+        List<Seat> seats =
+                seatRepository.findByCoachTrainId(
+                        schedule.getTrain().getId()
+                );
 
-        List<SeatAvailabilityResponse> results = new ArrayList<>();
+        List<SeatAvailabilityResponse> results =
+                new ArrayList<>();
 
         for (Seat seat : seats) {
 
             boolean booked =
-                    bookingSeatRepository.existsBySeatIdAndTravelDate(
-                            seat.getId(),
-                            travelDate
-                    );
+                    bookingSeatRepository
+                            .existsBySeatIdAndScheduleIdAndTravelDate(
+                                    seat.getId(),
+                                    schedule.getId(),
+                                    travelDate
+                            );
 
             results.add(
                     new SeatAvailabilityResponse(

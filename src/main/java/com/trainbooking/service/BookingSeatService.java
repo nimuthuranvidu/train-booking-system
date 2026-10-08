@@ -8,6 +8,7 @@ import com.trainbooking.repository.BookingSeatRepository;
 import com.trainbooking.repository.SeatRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,9 @@ public class BookingSeatService {
         this.seatRepository = seatRepository;
     }
 
-    public BookingSeat addBookingSeat(Long bookingId, Long seatId) {
+    public BookingSeat addBookingSeat(
+            Long bookingId,
+            Long seatId) {
 
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() ->
@@ -39,12 +42,35 @@ public class BookingSeatService {
                 .orElseThrow(() ->
                         new RuntimeException("Seat not found"));
 
-        if (bookingSeatRepository.existsBySeatIdAndTravelDate(
-                seatId,
-                booking.getTravelDate()
-        )) {
+        // Check whether the seat belongs to the same train
+        // as the booking's schedule.
+        if (!seat.getCoach()
+                .getTrain()
+                .getId()
+                .equals(booking.getSchedule()
+                        .getTrain()
+                        .getId())) {
+
             throw new RuntimeException(
-                    "Seat is already booked for this travel date"
+                    "This seat does not belong to the selected train"
+            );
+        }
+
+        boolean alreadyBooked =
+                bookingSeatRepository
+                        .existsBySeatIdAndScheduleIdAndTravelDate(
+                                seatId,
+                                booking.getSchedule().getId(),
+                                booking.getTravelDate()
+                        );
+
+        if (alreadyBooked) {
+
+            throw new RuntimeException(
+                    "Seat " + seat.getSeatNumber()
+                            + " in "
+                            + seat.getCoach().getCoachNumber()
+                            + " is already booked"
             );
         }
 
@@ -63,21 +89,25 @@ public class BookingSeatService {
                         new RuntimeException("Booking not found"));
 
         if (seatIds == null || seatIds.isEmpty()) {
+
             throw new RuntimeException(
                     "At least one seat must be selected"
             );
         }
 
-        // Prevent duplicate seat IDs in the same request
-        Set<Long> uniqueSeatIds = new HashSet<>(seatIds);
+        // Prevent duplicate seat IDs in the same request.
+        Set<Long> uniqueSeatIds =
+                new HashSet<>(seatIds);
 
         if (uniqueSeatIds.size() != seatIds.size()) {
+
             throw new RuntimeException(
                     "Duplicate seat selected"
             );
         }
 
-        List<BookingSeat> selectedSeats = new java.util.ArrayList<>();
+        List<BookingSeat> selectedSeats =
+                new ArrayList<>();
 
         for (Long seatId : seatIds) {
 
@@ -87,14 +117,31 @@ public class BookingSeatService {
                                     "Seat not found: " + seatId
                             ));
 
+            // Check whether the seat belongs to the same train
+            // as the booking's schedule.
+            if (!seat.getCoach()
+                    .getTrain()
+                    .getId()
+                    .equals(booking.getSchedule()
+                            .getTrain()
+                            .getId())) {
+
+                throw new RuntimeException(
+                        "Seat " + seat.getSeatNumber()
+                                + " does not belong to the selected train"
+                );
+            }
+
             boolean alreadyBooked =
                     bookingSeatRepository
-                            .existsBySeatIdAndTravelDate(
+                            .existsBySeatIdAndScheduleIdAndTravelDate(
                                     seatId,
+                                    booking.getSchedule().getId(),
                                     booking.getTravelDate()
                             );
 
             if (alreadyBooked) {
+
                 throw new RuntimeException(
                         "Seat " + seat.getSeatNumber()
                                 + " in "
@@ -109,14 +156,20 @@ public class BookingSeatService {
             selectedSeats.add(bookingSeat);
         }
 
-        return bookingSeatRepository.saveAll(selectedSeats);
+        return bookingSeatRepository.saveAll(
+                selectedSeats
+        );
     }
 
-    public List<BookingSeat> getSeatsByBooking(Long bookingId) {
-        return bookingSeatRepository.findByBookingId(bookingId);
+    public List<BookingSeat> getSeatsByBooking(
+            Long bookingId) {
+
+        return bookingSeatRepository
+                .findByBookingId(bookingId);
     }
 
     public List<BookingSeat> getAllBookingSeats() {
+
         return bookingSeatRepository.findAll();
     }
 }

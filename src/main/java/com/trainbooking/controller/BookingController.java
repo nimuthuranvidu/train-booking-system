@@ -1,5 +1,6 @@
 package com.trainbooking.controller;
 
+import com.trainbooking.dto.BookingRequest;
 import com.trainbooking.dto.BookingResponseDTO;
 import com.trainbooking.dto.UserResponseDTO;
 import com.trainbooking.entity.Booking;
@@ -20,10 +21,10 @@ public class BookingController {
 
     @PostMapping
     public BookingResponseDTO addBooking(
-            @RequestBody Booking booking) {
+            @RequestBody BookingRequest request) {
 
         Booking savedBooking =
-                bookingService.addBooking(booking);
+                bookingService.addBooking(request);
 
         return convertToResponse(savedBooking);
     }
@@ -47,6 +48,16 @@ public class BookingController {
         return convertToResponse(confirmedBooking);
     }
 
+    @PutMapping("/{bookingId}/cancel")
+    public BookingResponseDTO cancelBooking(
+            @PathVariable Long bookingId) {
+
+        Booking cancelledBooking =
+                bookingService.cancelBooking(bookingId);
+
+        return convertToResponse(cancelledBooking);
+    }
+
     private BookingResponseDTO convertToResponse(
             Booking booking) {
 
@@ -61,6 +72,7 @@ public class BookingController {
         return new BookingResponseDTO(
                 booking.getId(),
                 user,
+                booking.getSchedule().getId(),
                 booking.getTravelDate(),
                 booking.getStatus(),
                 booking.getTotalAmount()

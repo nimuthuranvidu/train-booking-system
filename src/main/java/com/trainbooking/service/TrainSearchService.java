@@ -53,14 +53,16 @@ public class TrainSearchService {
         // Get the day of the week
         DayOfWeek travelDay = travelDate.getDayOfWeek();
 
-        List<TrainSearchResponse> results = new ArrayList<>();
+        List<TrainSearchResponse> results =
+                new ArrayList<>();
 
         // Get all schedules
-        List<Schedule> schedules = scheduleRepository.findAll();
+        List<Schedule> schedules =
+                scheduleRepository.findAll();
 
         for (Schedule schedule : schedules) {
 
-            // Check route
+            // Check source station
             if (!schedule.getRoute()
                     .getSourceStation()
                     .getId()
@@ -69,6 +71,7 @@ public class TrainSearchService {
                 continue;
             }
 
+            // Check destination station
             if (!schedule.getRoute()
                     .getDestinationStation()
                     .getId()
@@ -78,11 +81,13 @@ public class TrainSearchService {
             }
 
             // Check operating day
-            boolean operatesOnDay = schedule.getOperatingDays()
-                    .stream()
-                    .anyMatch(day ->
-                            day.getDay().equals(travelDay)
-                    );
+            boolean operatesOnDay =
+                    schedule.getOperatingDays()
+                            .stream()
+                            .anyMatch(day ->
+                                    day.getDay()
+                                            .equals(travelDay)
+                            );
 
             if (!operatesOnDay) {
                 continue;
@@ -97,13 +102,15 @@ public class TrainSearchService {
             int totalSeats = seats.size();
             int bookedSeats = 0;
 
-            // Check each seat for this travel date
+            // Check each seat for this specific
+            // schedule and travel date
             for (Seat seat : seats) {
 
                 boolean booked =
                         bookingSeatRepository
-                                .existsBySeatIdAndTravelDate(
+                                .existsBySeatIdAndScheduleIdAndTravelDate(
                                         seat.getId(),
+                                        schedule.getId(),
                                         travelDate
                                 );
 
@@ -112,10 +119,12 @@ public class TrainSearchService {
                 }
             }
 
-            int availableSeats = totalSeats - bookedSeats;
+            int availableSeats =
+                    totalSeats - bookedSeats;
 
             boolean enoughSeats =
-                    availableSeats >= request.getNumberOfPassengers();
+                    availableSeats >=
+                            request.getNumberOfPassengers();
 
             TrainSearchResponse response =
                     new TrainSearchResponse(
