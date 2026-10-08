@@ -796,3 +796,1281 @@ footer {
         width: 100%;
     }
 }
+
+/* =========================
+   SEAT PAGE
+========================= */
+
+.seat-page {
+    min-height: calc(100vh - 150px);
+
+    padding: 60px 7% 120px;
+}
+
+.seat-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.seat-header h1 {
+    font-size: 42px;
+
+    margin: 15px 0 8px;
+}
+
+.seat-header p {
+    color: #667085;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   SEAT LEGEND
+========================= */
+
+.seat-legend {
+    display: flex;
+
+    gap: 25px;
+
+    padding: 18px 22px;
+
+    background: white;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 12px;
+
+    margin-bottom: 25px;
+}
+
+.legend-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #667085;
+
+    font-size: 13px;
+}
+
+.legend-seat {
+    width: 22px;
+    height: 22px;
+
+    border-radius: 5px;
+
+    display: inline-block;
+}
+
+.available-seat {
+    background: white;
+
+    border: 2px solid #2563eb;
+}
+
+.selected-seat {
+    background: #2563eb;
+
+    border: 2px solid #2563eb;
+}
+
+.occupied-seat {
+    background: #d0d5dd;
+
+    border: 2px solid #d0d5dd;
+}
+
+
+/* =========================
+   COACH CONTAINER
+========================= */
+
+.coach-container {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 25px;
+}
+
+
+/* =========================
+   COACH CARD
+========================= */
+
+.coach-card {
+    background: white;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 16px;
+
+    padding: 25px;
+}
+
+.coach-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 25px;
+
+    border-bottom: 1px solid #eaecf0;
+}
+
+.coach-title {
+    font-size: 20px;
+
+    font-weight: 750;
+}
+
+.coach-subtitle {
+    color: #667085;
+
+    font-size: 13px;
+
+    margin-top: 5px;
+}
+
+
+/* =========================
+   SEAT GRID
+========================= */
+
+.seat-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 55px);
+
+    gap: 14px;
+
+    justify-content: center;
+}
+
+
+/* =========================
+   SEAT
+========================= */
+
+.seat-button {
+    width: 55px;
+    height: 55px;
+
+    border-radius: 9px;
+
+    background: white;
+
+    border: 2px solid #2563eb;
+
+    color: #2563eb;
+
+    font-weight: 750;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    position: relative;
+}
+
+.seat-button:hover:not(:disabled) {
+    background: #eff6ff;
+
+    transform: translateY(-2px);
+}
+
+.seat-button.selected {
+    background: #2563eb;
+
+    color: white;
+}
+
+.seat-button.occupied {
+    background: #d0d5dd;
+
+    border-color: #d0d5dd;
+
+    color: #667085;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   SEAT TYPE
+========================= */
+
+.seat-type {
+    display: block;
+
+    font-size: 8px;
+
+    margin-top: 2px;
+
+    font-weight: 500;
+}
+
+
+/* =========================
+   SELECTION SUMMARY
+========================= */
+
+.selection-summary {
+    position: fixed;
+
+    bottom: 0;
+
+    left: 0;
+
+    right: 0;
+
+    min-height: 80px;
+
+    padding: 15px 7%;
+
+    background: white;
+
+    border-top: 1px solid #eaecf0;
+
+    box-shadow:
+            0 -5px 20px rgba(15, 23, 42, 0.08);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 50px;
+
+    z-index: 50;
+}
+
+.summary-label {
+    display: block;
+
+    color: #667085;
+
+    font-size: 12px;
+
+    margin-bottom: 5px;
+}
+
+.selection-summary strong {
+    font-size: 15px;
+}
+
+.continue-btn {
+    margin-left: auto;
+
+    padding: 13px 30px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.continue-btn:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+.continue-btn:disabled {
+    background: #98a2b3;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .seat-page {
+        padding: 40px 5% 130px;
+    }
+
+    .seat-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .seat-header h1 {
+        font-size: 32px;
+    }
+
+    .seat-grid {
+        grid-template-columns:
+            repeat(4, 50px);
+
+        gap: 10px;
+    }
+
+    .seat-button {
+        width: 50px;
+        height: 50px;
+    }
+
+    .selection-summary {
+        padding: 12px 5%;
+
+        gap: 20px;
+    }
+
+    .continue-btn {
+        padding: 12px 18px;
+    }
+}
+
+/* =========================================
+   ANIMATED TRAIN SEAT PAGE
+========================================= */
+
+.train-seat-page {
+    min-height: calc(100vh - 150px);
+    padding: 55px 7% 130px;
+}
+
+.seat-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.seat-page-header h1 {
+    font-size: 42px;
+    margin: 15px 0 8px;
+}
+
+.seat-page-header p {
+    color: #667085;
+}
+
+
+/* =========================================
+   TRAIN VIEW
+========================================= */
+
+.train-view {
+    min-height: 650px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background:
+            radial-gradient(
+                    circle at center,
+                    #eef4ff 0%,
+                    #f7f9fc 55%,
+                    #ffffff 100%
+            );
+
+    border: 1px solid #e4e7ec;
+    border-radius: 25px;
+
+    padding: 40px 20px;
+
+    overflow: hidden;
+}
+
+.train-instruction {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    margin-bottom: 30px;
+
+    padding: 14px 22px;
+
+    background: rgba(255,255,255,0.9);
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 12px;
+}
+
+.train-instruction > span {
+    font-size: 30px;
+}
+
+.train-instruction strong {
+    display: block;
+}
+
+.train-instruction p {
+    margin-top: 3px;
+    color: #667085;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   TRAIN BODY
+========================================= */
+
+.train-body {
+    width: 270px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    filter:
+            drop-shadow(
+                    0 20px 30px rgba(15,23,42,0.15)
+            );
+
+    animation: trainAppear 0.7s ease;
+}
+
+@keyframes trainAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =========================================
+   FRONT
+========================================= */
+
+.train-front {
+    height: 85px;
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #1e293b,
+                    #334155
+            );
+
+    border-radius:
+            80px 80px 12px 12px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.train-window {
+    width: 70px;
+    height: 25px;
+
+    background: #60a5fa;
+
+    border: 4px solid #0f172a;
+
+    border-radius: 10px;
+
+    margin-bottom: 8px;
+}
+
+
+/* =========================================
+   COACH OVERVIEW
+========================================= */
+
+.coach-overview {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    background: #334155;
+
+    padding: 5px;
+}
+
+
+/* =========================================
+   COACH
+========================================= */
+
+.train-coach {
+    height: 110px;
+
+    position: relative;
+
+    background:
+            linear-gradient(
+                    90deg,
+                    #f8fafc,
+                    #e2e8f0,
+                    #f8fafc
+            );
+
+    border: 2px solid #94a3b8;
+
+    cursor: pointer;
+
+    transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease,
+            border-color 0.3s ease;
+}
+
+.train-coach:hover {
+    transform:
+            scale(1.04)
+            translateX(-3px);
+
+    border-color: #2563eb;
+
+    box-shadow:
+            0 8px 20px rgba(37,99,235,0.2);
+
+    z-index: 5;
+}
+
+
+/* =========================================
+   COACH WINDOWS
+========================================= */
+
+.coach-windows {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding-top: 17px;
+}
+
+.coach-window {
+    width: 25px;
+    height: 38px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #bfdbfe,
+                    #60a5fa
+            );
+
+    border: 2px solid #64748b;
+
+    border-radius: 5px;
+}
+
+
+/* =========================================
+   COACH LABEL
+========================================= */
+
+.coach-label {
+    position: absolute;
+
+    bottom: 9px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    padding: 4px 12px;
+
+    background: #0f172a;
+
+    color: white;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   REAR
+========================================= */
+
+.train-back {
+    height: 55px;
+
+    background: #1e293b;
+
+    border-radius:
+            10px 10px 45px 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #94a3b8;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================
+   COACH ZOOM VIEW
+========================================= */
+
+.coach-view {
+    display: none;
+
+    min-height: 650px;
+
+    padding: 35px;
+
+    background:
+            radial-gradient(
+                    circle at center,
+                    #eef4ff,
+                    #f8fafc
+            );
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 25px;
+
+    animation: coachZoom 0.5s ease;
+}
+
+.coach-view.active {
+    display: block;
+}
+
+@keyframes coachZoom {
+
+    from {
+        opacity: 0;
+        transform: scale(0.88);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.coach-back-btn {
+    padding: 10px 17px;
+
+    border: 1px solid #d0d5dd;
+
+    background: white;
+
+    border-radius: 8px;
+
+    color: #344054;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.coach-back-btn:hover {
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+
+/* =========================================
+   SELECTED COACH TITLE
+========================================= */
+
+.selected-coach-title {
+    text-align: center;
+
+    margin:
+            20px 0 40px;
+}
+
+.selected-coach-title h2 {
+    font-size: 36px;
+
+    margin:
+            12px 0 7px;
+}
+
+.selected-coach-title p {
+    color: #667085;
+}
+
+
+/* =========================================
+   REAL SEATS
+========================================= */
+
+.coach-seat-grid {
+    max-width: 600px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 18px;
+
+    padding: 35px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 20px;
+
+    box-shadow:
+            0 20px 40px rgba(15,23,42,0.08);
+}
+
+
+/* =========================================
+   SEAT
+========================================= */
+
+.train-seat {
+    aspect-ratio: 1;
+
+    min-height: 65px;
+
+    border-radius: 12px;
+
+    border: 2px solid #2563eb;
+
+    background: white;
+
+    color: #2563eb;
+
+    cursor: pointer;
+
+    font-weight: 750;
+
+    transition:
+            transform 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.train-seat:hover:not(.occupied) {
+    transform: translateY(-4px);
+
+    background: #eff6ff;
+
+    box-shadow:
+            0 8px 18px rgba(37,99,235,0.15);
+}
+
+.train-seat.selected {
+    background: #2563eb;
+
+    color: white;
+
+    transform: scale(1.08);
+
+    box-shadow:
+            0 8px 20px rgba(37,99,235,0.3);
+
+    animation: seatSelected 0.25s ease;
+}
+
+@keyframes seatSelected {
+
+    0% {
+        transform: scale(0.9);
+    }
+
+    60% {
+        transform: scale(1.12);
+    }
+
+    100% {
+        transform: scale(1.08);
+    }
+
+}
+
+.train-seat.occupied {
+    background: #d0d5dd;
+
+    border-color: #d0d5dd;
+
+    color: #667085;
+
+    cursor: not-allowed;
+}
+
+.train-seat-number {
+    display: block;
+
+    font-size: 17px;
+}
+
+.train-seat-type {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 8px;
+
+    opacity: 0.75;
+}
+
+
+/* =========================================
+   SELECTION BAR
+========================================= */
+
+.seat-selection-bar {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    min-height: 82px;
+
+    padding: 15px 7%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 50px;
+
+    background: white;
+
+    border-top: 1px solid #e4e7ec;
+
+    box-shadow:
+            0 -5px 25px rgba(15,23,42,0.08);
+
+    z-index: 100;
+}
+
+.seat-selection-bar span {
+    display: block;
+
+    color: #667085;
+
+    font-size: 12px;
+
+    margin-bottom: 4px;
+}
+
+.seat-selection-bar strong {
+    font-size: 15px;
+}
+
+.continue-btn {
+    margin-left: auto;
+
+    padding: 13px 30px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.continue-btn:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+.continue-btn:disabled {
+    background: #98a2b3;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .train-seat-page {
+        padding: 40px 5% 130px;
+    }
+
+    .seat-page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+    .seat-page-header h1 {
+        font-size: 32px;
+    }
+
+    .train-body {
+        width: 230px;
+    }
+
+    .coach-seat-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        padding: 20px;
+
+        gap: 12px;
+    }
+
+    .train-seat {
+        min-height: 55px;
+    }
+
+    .seat-selection-bar {
+        gap: 20px;
+
+        padding:
+                12px 5%;
+    }
+
+    .continue-btn {
+        padding:
+                11px 18px;
+    }
+
+}
+
+/* =========================================
+   PASSENGER PAGE
+========================================= */
+
+.passenger-page {
+    min-height: calc(100vh - 150px);
+
+    padding: 55px 7% 130px;
+}
+
+.passenger-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 35px;
+}
+
+.passenger-header h1 {
+    font-size: 42px;
+
+    margin: 15px 0 8px;
+}
+
+.passenger-header p {
+    color: #667085;
+}
+
+
+/* =========================================
+   PASSENGER CARDS
+========================================= */
+
+.passenger-container {
+    max-width: 850px;
+
+    margin: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.passenger-card {
+    background: white;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 18px;
+
+    padding: 28px;
+
+    box-shadow:
+            0 8px 25px rgba(15, 23, 42, 0.05);
+
+    animation: passengerAppear 0.4s ease both;
+}
+
+@keyframes passengerAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+.passenger-card-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid #eaecf0;
+}
+
+.passenger-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.passenger-number {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-weight: 800;
+}
+
+.passenger-title h2 {
+    font-size: 18px;
+}
+
+.passenger-seat {
+    padding: 7px 12px;
+
+    background: #f0fdf4;
+
+    color: #15803d;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.passenger-form {
+    display: grid;
+
+    grid-template-columns:
+        2fr 1fr 1fr;
+
+    gap: 18px;
+}
+
+.passenger-field {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.passenger-field.full-width {
+    grid-column: span 3;
+}
+
+.passenger-field label {
+    margin-bottom: 7px;
+
+    color: #344054;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.passenger-field input,
+.passenger-field select {
+    height: 46px;
+
+    padding: 0 13px;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background: white;
+
+    color: #344054;
+}
+
+.passenger-field input:focus,
+.passenger-field select:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+            0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+/* =========================================
+   BOTTOM BAR
+========================================= */
+
+.passenger-bottom {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    min-height: 82px;
+
+    padding: 15px 7%;
+
+    display: flex;
+
+    align-items: center;
+
+    background: white;
+
+    border-top: 1px solid #eaecf0;
+
+    box-shadow:
+            0 -5px 20px rgba(15, 23, 42, 0.08);
+
+    z-index: 100;
+}
+
+.passenger-bottom span {
+    display: block;
+
+    color: #667085;
+
+    font-size: 12px;
+
+    margin-bottom: 4px;
+}
+
+.passenger-bottom strong {
+    font-size: 16px;
+}
+
+.passenger-bottom .continue-btn {
+    margin-left: auto;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .passenger-page {
+        padding: 40px 5% 130px;
+    }
+
+    .passenger-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .passenger-header h1 {
+        font-size: 32px;
+    }
+
+    .passenger-form {
+        grid-template-columns: 1fr;
+    }
+
+    .passenger-field.full-width {
+        grid-column: span 1;
+    }
+
+    .passenger-bottom {
+        padding: 12px 5%;
+    }
+
+    .passenger-bottom .continue-btn {
+        padding: 11px 16px;
+    }
+
+}

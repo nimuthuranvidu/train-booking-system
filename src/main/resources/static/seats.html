@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trainly - Select Seats</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <span class="logo-icon">🚆</span>
+        <span>Trainly</span>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="search-results.html">Search</a>
+    </nav>
+
+    <div class="nav-buttons">
+        <a href="#" class="login-btn">Login</a>
+        <a href="#" class="register-btn">Register</a>
+    </div>
+
+</header>
+
+
+<main class="train-seat-page">
+
+    <!-- HEADER -->
+
+    <div class="seat-page-header">
+
+        <div>
+
+            <span class="hero-tag">
+                SEAT SELECTION
+            </span>
+
+            <h1>Select Your Seat</h1>
+
+            <p id="journeyInfo">
+                Loading journey...
+            </p>
+
+        </div>
+
+        <a
+                href="search-results.html"
+                class="back-btn">
+
+            ← Back
+
+        </a>
+
+    </div>
+
+
+    <!-- TRAIN VIEW -->
+
+    <section
+            id="trainView"
+            class="train-view">
+
+        <div class="train-instruction">
+
+            <span>🚆</span>
+
+            <div>
+
+                <strong>Select a Coach</strong>
+
+                <p>
+                    Click a coach to view its seats
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="train-body">
+
+            <!-- FRONT -->
+
+            <div class="train-front">
+
+                <div class="train-window"></div>
+
+                <span>
+                    FRONT
+                </span>
+
+            </div>
+
+
+            <!-- COACHES -->
+
+            <div
+                    id="coachOverview"
+                    class="coach-overview">
+
+            </div>
+
+
+            <!-- BACK -->
+
+            <div class="train-back">
+
+                <span>
+                    REAR
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- COACH ZOOM VIEW -->
+
+    <section
+            id="coachView"
+            class="coach-view">
+
+        <button
+                id="backToTrain"
+                class="coach-back-btn">
+
+            ← Back to Train
+
+        </button>
+
+
+        <div class="selected-coach-title">
+
+            <span class="hero-tag">
+                COACH
+            </span>
+
+            <h2 id="selectedCoachName">
+                Coach
+            </h2>
+
+            <p>
+                Select your preferred seats
+            </p>
+
+        </div>
+
+
+        <div
+                id="coachSeatGrid"
+                class="coach-seat-grid">
+
+        </div>
+
+    </section>
+
+
+    <!-- LOADING -->
+
+    <div
+            id="seatLoading"
+            class="loading">
+
+        Loading train...
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div
+            id="seatError"
+            class="error-message">
+
+    </div>
+
+
+</main>
+
+
+<!-- SELECTION BAR -->
+
+<div class="seat-selection-bar">
+
+    <div>
+
+        <span>
+            Selected Seats
+        </span>
+
+        <strong id="selectedSeats">
+            None
+        </strong>
+
+    </div>
+
+
+    <div>
+
+        <span>
+            Selected
+        </span>
+
+        <strong id="selectedCount">
+            0
+        </strong>
+
+    </div>
+
+
+    <button
+            id="continueBtn"
+            class="continue-btn"
+            disabled>
+
+        Continue
+
+    </button>
+
+</div>
+
+
+<footer>
+
+    <div class="footer-content">
+
+        <div class="logo">
+            🚆 Trainly
+        </div>
+
+        <p>
+            Your simple and reliable train booking system.
+        </p>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        © 2026 Trainly. All rights reserved.
+
+    </div>
+
+</footer>
+
+
+<script src="js/seats.js"></script>
+
+</body>
+</html>
