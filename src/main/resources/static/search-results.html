@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trainly - Search Results</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <span class="logo-icon">🚆</span>
+        <span>Trainly</span>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#" class="active">Search</a>
+        <a href="#">About</a>
+    </nav>
+
+    <div class="nav-buttons">
+        <a href="#" class="login-btn">Login</a>
+        <a href="#" class="register-btn">Register</a>
+    </div>
+
+</header>
+
+
+<main class="results-page">
+
+    <div class="results-header">
+
+        <div>
+            <span class="hero-tag">TRAIN SEARCH</span>
+
+            <h1>Available Trains</h1>
+
+            <p id="journeyInfo">
+                Searching for available trains...
+            </p>
+        </div>
+
+        <a href="index.html" class="back-btn">
+            ← Modify Search
+        </a>
+
+    </div>
+
+
+    <div id="loading" class="loading">
+        Searching for trains...
+    </div>
+
+
+    <div id="errorMessage" class="error-message"></div>
+
+
+    <div id="resultsContainer" class="results-container"></div>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-content">
+
+        <div class="logo">
+            🚆 Trainly
+        </div>
+
+        <p>
+            Your simple and reliable train booking system.
+        </p>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Trainly. All rights reserved.
+    </div>
+
+</footer>
+
+
+<script src="js/search.js"></script>
+
+</body>
+</html>
