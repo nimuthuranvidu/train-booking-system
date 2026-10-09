@@ -47,16 +47,25 @@ const searchData =
     sessionStorage.getItem("trainSearch");
 
 const scheduleId =
-    sessionStorage.getItem(
-        "selectedScheduleId"
-    );
+    sessionStorage.getItem("selectedScheduleId");
 
 
 let search = null;
 
 let allSeats = [];
 
-let selectedSeats = [];
+
+// ===============================
+// LOAD SELECTED SEATS
+// ===============================
+// FIX:
+// Previously selectedSeats was not declared.
+// This caused:
+// ReferenceError: selectedSeats is not defined
+
+let selectedSeats = JSON.parse(
+    sessionStorage.getItem("selectedSeats") || "[]"
+);
 
 
 // ===============================
@@ -71,11 +80,21 @@ if (!searchData || !scheduleId) {
 
 } else {
 
-    search =
-        JSON.parse(searchData);
+    try {
 
-    loadSeats();
+        search =
+            JSON.parse(searchData);
 
+        loadSeats();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showError(
+            "Invalid train search information."
+        );
+    }
 }
 
 
@@ -102,12 +121,28 @@ async function loadSeats() {
 
         if (!response.ok) {
 
-            const error =
-                await response.json();
+            let errorMessage =
+                "Unable to load seats.";
+
+            try {
+
+                const error =
+                    await response.json();
+
+                errorMessage =
+                    error.message ||
+                    errorMessage;
+
+            } catch (e) {
+
+                console.error(
+                    "Could not read error response.",
+                    e
+                );
+            }
 
             throw new Error(
-                error.message ||
-                "Unable to load seats."
+                errorMessage
             );
         }
 
@@ -122,6 +157,14 @@ async function loadSeats() {
         );
 
 
+        if (!Array.isArray(allSeats)) {
+
+            throw new Error(
+                "Invalid seat data received from server."
+            );
+        }
+
+
         seatLoading.style.display =
             "none";
 
@@ -131,7 +174,10 @@ async function loadSeats() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Seat loading error:",
+            error
+        );
 
         showError(
             error.message ||
@@ -155,6 +201,7 @@ function buildTrainOverview() {
     const coaches = {};
 
 
+    // Group seats by coach
     allSeats.forEach(seat => {
 
         if (!coaches[seat.coachNumber]) {
@@ -170,6 +217,24 @@ function buildTrainOverview() {
     });
 
 
+    console.log(
+        "Coaches:",
+        coaches
+    );
+
+
+    // If no coaches
+    if (Object.keys(coaches).length === 0) {
+
+        showError(
+            "No coaches or seats are available for this train."
+        );
+
+        return;
+    }
+
+
+    // Create each coach
     Object.keys(coaches).forEach(
         coachNumber => {
 
@@ -180,14 +245,16 @@ function buildTrainOverview() {
                 "train-coach";
 
 
+            // ===============================
+            // WINDOWS
+            // ===============================
+
             const windows =
                 document.createElement("div");
 
             windows.className =
                 "coach-windows";
 
-
-            // Create windows
 
             for (
                 let i = 0;
@@ -211,6 +278,10 @@ function buildTrainOverview() {
             }
 
 
+            // ===============================
+            // COACH LABEL
+            // ===============================
+
             const label =
                 document.createElement("div");
 
@@ -230,11 +301,18 @@ function buildTrainOverview() {
             );
 
 
-            // Click coach
+            // ===============================
+            // CLICK COACH
+            // ===============================
 
             coach.addEventListener(
                 "click",
                 () => {
+
+                    console.log(
+                        "Coach clicked:",
+                        coachNumber
+                    );
 
                     openCoach(
                         coachNumber,
@@ -264,6 +342,17 @@ function openCoach(
     seats
 ) {
 
+    console.log(
+        "Opening coach:",
+        coachNumber
+    );
+
+    console.log(
+        "Seats in coach:",
+        seats
+    );
+
+
     selectedCoachName.textContent =
         `Coach ${coachNumber}`;
 
@@ -271,12 +360,20 @@ function openCoach(
     coachSeatGrid.innerHTML = "";
 
 
+    // ===============================
+    // CREATE SEATS
+    // ===============================
+
     seats.forEach(seat => {
 
         const button =
             document.createElement(
                 "button"
             );
+
+
+        button.type =
+            "button";
 
 
         button.className =
@@ -296,7 +393,9 @@ function openCoach(
         `;
 
 
-        // Occupied
+        // ===============================
+        // OCCUPIED
+        // ===============================
 
         if (!seat.available) {
 
@@ -307,7 +406,13 @@ function openCoach(
             button.disabled =
                 true;
 
-        } else {
+        }
+
+            // ===============================
+            // AVAILABLE
+        // ===============================
+
+        else {
 
             button.addEventListener(
                 "click",
@@ -324,7 +429,9 @@ function openCoach(
         }
 
 
-        // Already selected
+        // ===============================
+        // ALREADY SELECTED
+        // ===============================
 
         if (
             selectedSeats.some(
@@ -348,17 +455,22 @@ function openCoach(
     });
 
 
-    // Hide train
+    // ===============================
+    // SHOW COACH VIEW
+    // ===============================
 
     trainView.style.display =
         "none";
 
 
-    // Show coach
-
     coachView.classList.add(
         "active"
     );
+
+
+    // Extra safety in case CSS is missing
+    coachView.style.display =
+        "block";
 
 
     window.scrollTo({
@@ -380,6 +492,11 @@ backToTrain.addEventListener(
         coachView.classList.remove(
             "active"
         );
+
+
+        // Extra safety
+        coachView.style.display =
+            "none";
 
 
         setTimeout(() => {
@@ -416,7 +533,9 @@ function toggleSeat(
         );
 
 
-    // Remove
+    // ===============================
+    // REMOVE SEAT
+    // ===============================
 
     if (index !== -1) {
 
@@ -425,13 +544,17 @@ function toggleSeat(
             1
         );
 
+
         button.classList.remove(
             "selected"
         );
 
     }
 
-    // Add
+
+        // ===============================
+        // ADD SEAT
+    // ===============================
 
     else {
 
@@ -464,6 +587,29 @@ function toggleSeat(
         );
 
     }
+
+
+    // ===============================
+    // SAVE
+    // ===============================
+
+    sessionStorage.setItem(
+        "selectedSeats",
+        JSON.stringify(
+            selectedSeats
+        )
+    );
+
+
+    sessionStorage.setItem(
+        "selectedSeatIds",
+        JSON.stringify(
+            selectedSeats.map(
+                seat =>
+                    seat.seatId
+            )
+        )
+    );
 
 
     updateSelection();
@@ -524,6 +670,7 @@ continueBtn.addEventListener(
         }
 
 
+        // Save seat IDs
         sessionStorage.setItem(
             "selectedSeatIds",
             JSON.stringify(
@@ -535,6 +682,7 @@ continueBtn.addEventListener(
         );
 
 
+        // Save full seat objects
         sessionStorage.setItem(
             "selectedSeats",
             JSON.stringify(
@@ -559,8 +707,10 @@ function showError(message) {
     seatLoading.style.display =
         "none";
 
+
     seatError.style.display =
         "block";
+
 
     seatError.textContent =
         message;
@@ -605,7 +755,8 @@ function formatDate(
 
     const date =
         new Date(
-            dateString + "T00:00:00"
+            dateString +
+            "T00:00:00"
         );
 
 

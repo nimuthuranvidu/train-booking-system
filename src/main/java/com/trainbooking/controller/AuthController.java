@@ -205,6 +205,58 @@ public class AuthController {
         );
     }
 
+
+    // =========================
+    // ADMIN LOGIN
+    // =========================
+
+    @PostMapping("/admin-login")
+    public LoginResponseDTO adminLogin(
+            @RequestBody LoginRequest request) {
+
+        User user = userRepository
+                .findByEmail(request.getEmail())
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Invalid email or password"
+                        ));
+
+        boolean passwordMatches =
+                passwordEncoder.matches(
+                        request.getPassword(),
+                        user.getPassword()
+                );
+
+        if (!passwordMatches) {
+            throw new RuntimeException(
+                    "Invalid email or password"
+            );
+        }
+
+        if (user.getRole() == null ||
+                !user.getRole().equalsIgnoreCase("ADMIN")) {
+
+            throw new RuntimeException(
+                    "Access denied. Admin account required."
+            );
+        }
+
+        String token = jwtService.generateToken(
+                user.getEmail(),
+                user.getRole()
+        );
+
+        return new LoginResponseDTO(
+                "Admin login successful",
+                token,
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getRole()
+        );
+    }
+
+
     // =========================
     // FORGOT PASSWORD
     // =========================

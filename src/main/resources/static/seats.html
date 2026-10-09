@@ -1,39 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0">
 
     <title>Trainly - Select Seats</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link
+            rel="stylesheet"
+            href="css/style.css">
+
 </head>
 
 <body>
 
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
 <header class="navbar">
 
     <div class="logo">
+
         <span class="logo-icon">🚆</span>
+
         <span>Trainly</span>
+
     </div>
 
+
     <nav>
-        <a href="index.html">Home</a>
-        <a href="search-results.html">Search</a>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="search-results.html">
+            Search
+        </a>
+
     </nav>
 
+
     <div class="nav-buttons">
-        <a href="#" class="login-btn">Login</a>
-        <a href="#" class="register-btn">Register</a>
+
+        <a
+                href="login.html"
+                class="login-btn">
+
+            Login
+
+        </a>
+
+        <a
+                href="register.html"
+                class="register-btn">
+
+            Register
+
+        </a>
+
     </div>
 
 </header>
 
 
+<!-- =========================================
+     MAIN
+========================================= -->
+
 <main class="train-seat-page">
 
-    <!-- HEADER -->
+    <!-- =====================================
+         PAGE HEADER
+    ====================================== -->
 
     <div class="seat-page-header">
 
@@ -43,13 +88,16 @@
                 SEAT SELECTION
             </span>
 
-            <h1>Select Your Seat</h1>
+            <h1>
+                Select Your Seat
+            </h1>
 
             <p id="journeyInfo">
                 Loading journey...
             </p>
 
         </div>
+
 
         <a
                 href="search-results.html"
@@ -62,19 +110,51 @@
     </div>
 
 
-    <!-- TRAIN VIEW -->
+    <!-- =====================================
+         LOADING
+    ====================================== -->
+
+    <div
+            id="seatLoading"
+            class="loading">
+
+        Loading train...
+
+    </div>
+
+
+    <!-- =====================================
+         ERROR
+    ====================================== -->
+
+    <div
+            id="seatError"
+            class="error-message">
+
+    </div>
+
+
+    <!-- =====================================
+         TRAIN VIEW
+    ====================================== -->
 
     <section
             id="trainView"
             class="train-view">
 
+        <!-- INSTRUCTION -->
+
         <div class="train-instruction">
 
-            <span>🚆</span>
+            <span>
+                🚆
+            </span>
 
             <div>
 
-                <strong>Select a Coach</strong>
+                <strong>
+                    Select a Coach
+                </strong>
 
                 <p>
                     Click a coach to view its seats
@@ -84,6 +164,8 @@
 
         </div>
 
+
+        <!-- TRAIN BODY -->
 
         <div class="train-body">
 
@@ -106,10 +188,15 @@
                     id="coachOverview"
                     class="coach-overview">
 
+                <!--
+                    Coaches are generated
+                    dynamically by seats.js
+                -->
+
             </div>
 
 
-            <!-- BACK -->
+            <!-- REAR -->
 
             <div class="train-back">
 
@@ -124,20 +211,27 @@
     </section>
 
 
-    <!-- COACH ZOOM VIEW -->
+    <!-- =====================================
+         COACH SEAT VIEW
+    ====================================== -->
 
     <section
             id="coachView"
             class="coach-view">
 
+        <!-- BACK BUTTON -->
+
         <button
                 id="backToTrain"
-                class="coach-back-btn">
+                class="coach-back-btn"
+                type="button">
 
             ← Back to Train
 
         </button>
 
+
+        <!-- COACH TITLE -->
 
         <div class="selected-coach-title">
 
@@ -156,41 +250,31 @@
         </div>
 
 
+        <!-- SEATS -->
+
         <div
                 id="coachSeatGrid"
                 class="coach-seat-grid">
+
+            <!--
+                Seats are generated
+                dynamically by seats.js
+            -->
 
         </div>
 
     </section>
 
-
-    <!-- LOADING -->
-
-    <div
-            id="seatLoading"
-            class="loading">
-
-        Loading train...
-
-    </div>
-
-
-    <!-- ERROR -->
-
-    <div
-            id="seatError"
-            class="error-message">
-
-    </div>
-
-
 </main>
 
 
-<!-- SELECTION BAR -->
+<!-- =========================================
+     SELECTION BAR
+========================================= -->
 
 <div class="seat-selection-bar">
+
+    <!-- SELECTED SEATS -->
 
     <div>
 
@@ -205,6 +289,8 @@
     </div>
 
 
+    <!-- COUNT -->
+
     <div>
 
         <span>
@@ -218,9 +304,12 @@
     </div>
 
 
+    <!-- CONTINUE -->
+
     <button
             id="continueBtn"
             class="continue-btn"
+            type="button"
             disabled>
 
         Continue
@@ -229,6 +318,10 @@
 
 </div>
 
+
+<!-- =========================================
+     FOOTER
+========================================= -->
 
 <footer>
 
@@ -244,6 +337,7 @@
 
     </div>
 
+
     <div class="footer-bottom">
 
         © 2026 Trainly. All rights reserved.
@@ -253,7 +347,13 @@
 </footer>
 
 
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script src="js/app.js"></script>
 <script src="js/seats.js"></script>
 
 </body>
+
 </html>

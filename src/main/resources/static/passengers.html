@@ -1,38 +1,91 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0">
 
     <title>Trainly - Passenger Details</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link
+            rel="stylesheet"
+            href="css/style.css">
+
 </head>
 
+
 <body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
 
 <header class="navbar">
 
     <div class="logo">
-        <span class="logo-icon">🚆</span>
-        <span>Trainly</span>
+
+        <span class="logo-icon">
+            🚆
+        </span>
+
+        <span>
+            Trainly
+        </span>
+
     </div>
 
+
     <nav>
-        <a href="index.html">Home</a>
-        <a href="search-results.html">Search</a>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="search-results.html">
+            Search
+        </a>
+
     </nav>
 
+
     <div class="nav-buttons">
-        <a href="#" class="login-btn">Login</a>
-        <a href="#" class="register-btn">Register</a>
+
+        <a
+                href="login.html"
+                class="login-btn">
+
+            Login
+
+        </a>
+
+        <a
+                href="register.html"
+                class="register-btn">
+
+            Register
+
+        </a>
+
     </div>
 
 </header>
 
 
+<!-- =========================================
+     MAIN
+========================================= -->
+
 <main class="passenger-page">
+
+
+    <!-- =====================================
+         PAGE HEADER
+    ====================================== -->
 
     <div class="passenger-header">
 
@@ -42,13 +95,16 @@
                 PASSENGER DETAILS
             </span>
 
-            <h1>Who's Travelling?</h1>
+            <h1>
+                Who's Travelling?
+            </h1>
 
             <p id="journeyInfo">
                 Enter details for each passenger.
             </p>
 
         </div>
+
 
         <a
                 href="seats.html"
@@ -61,12 +117,20 @@
     </div>
 
 
+    <!-- =====================================
+         PASSENGERS
+    ====================================== -->
+
     <div
             id="passengerContainer"
             class="passenger-container">
 
     </div>
 
+
+    <!-- =====================================
+         ERROR
+    ====================================== -->
 
     <div
             id="passengerError"
@@ -75,11 +139,17 @@
     </div>
 
 
+    <!-- =====================================
+         BOTTOM BAR
+    ====================================== -->
+
     <div class="passenger-bottom">
 
         <div>
 
-            <span>Passengers</span>
+            <span>
+                Passengers
+            </span>
 
             <strong id="passengerCount">
                 0
@@ -87,9 +157,11 @@
 
         </div>
 
+
         <button
                 id="continueBtn"
-                class="continue-btn">
+                class="continue-btn"
+                type="button">
 
             Continue to Summary →
 
@@ -99,6 +171,10 @@
 
 </main>
 
+
+<!-- =========================================
+     FOOTER
+========================================= -->
 
 <footer>
 
@@ -114,14 +190,24 @@
 
     </div>
 
+
     <div class="footer-bottom">
+
         © 2026 Trainly. All rights reserved.
+
     </div>
 
 </footer>
 
 
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script src="js/app.js"></script>
 <script src="js/passengers.js"></script>
 
+
 </body>
+
 </html>

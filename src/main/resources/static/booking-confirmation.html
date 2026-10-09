@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0">
+
+    <title>Trainly - Booking Confirmed</title>
+
+    <link
+            rel="stylesheet"
+            href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <span class="logo-icon">
+            🚆
+        </span>
+
+        <span>
+            Trainly
+        </span>
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="search-results.html">
+            Search
+        </a>
+
+    </nav>
+
+
+    <div class="nav-buttons">
+
+        <a
+                href="profile.html"
+                class="profile-btn">
+
+            👤 Profile
+
+        </a>
+
+        <button
+                type="button"
+                id="logoutBtn"
+                class="logout-btn">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main class="confirmation-page">
+
+
+    <div class="confirmation-card">
+
+
+        <!-- =====================================
+             SUCCESS ICON
+        ====================================== -->
+
+        <div class="confirmation-icon">
+            ✓
+        </div>
+
+
+        <!-- =====================================
+             TITLE
+        ====================================== -->
+
+        <span class="hero-tag">
+            BOOKING CONFIRMED
+        </span>
+
+
+        <h1>
+            Your Ticket is Confirmed!
+        </h1>
+
+
+        <p class="confirmation-message">
+            Your train booking has been successfully confirmed.
+        </p>
+
+
+        <!-- =====================================
+             BOOKING REFERENCE
+        ====================================== -->
+
+        <div class="booking-number-box">
+
+            <span>
+                Booking Reference
+            </span>
+
+            <strong id="bookingId">
+                -
+            </strong>
+
+        </div>
+
+
+        <!-- =====================================
+             JOURNEY DETAILS
+        ====================================== -->
+
+        <div class="confirmation-details">
+
+
+            <!-- TRAIN -->
+
+            <div class="confirmation-detail">
+
+                <span>
+                    🚆 Train
+                </span>
+
+                <strong id="trainName">
+                    -
+                </strong>
+
+            </div>
+
+
+            <!-- JOURNEY -->
+
+            <div class="confirmation-detail">
+
+                <span>
+                    📍 Journey
+                </span>
+
+                <strong id="journey">
+                    -
+                </strong>
+
+            </div>
+
+
+            <!-- TRAVEL DATE -->
+
+            <div class="confirmation-detail">
+
+                <span>
+                    📅 Travel Date
+                </span>
+
+                <strong id="travelDate">
+                    -
+                </strong>
+
+            </div>
+
+
+            <!-- SEATS -->
+
+            <div class="confirmation-detail">
+
+                <span>
+                    💺 Seats
+                </span>
+
+                <strong id="selectedSeats">
+                    -
+                </strong>
+
+            </div>
+
+
+            <!-- PASSENGERS -->
+
+            <div class="confirmation-detail">
+
+                <span>
+                    👥 Passengers
+                </span>
+
+                <strong id="passengerCount">
+                    -
+                </strong>
+
+            </div>
+
+
+            <!-- TOTAL -->
+
+            <div class="confirmation-detail">
+
+                <span>
+                    💰 Total Amount
+                </span>
+
+                <strong id="totalAmount">
+                    Rs. 0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             ACTION BUTTONS
+        ====================================== -->
+
+        <div class="confirmation-actions">
+
+            <a
+                    href="my-bookings.html"
+                    class="confirm-booking-btn">
+
+                View My Bookings
+
+            </a>
+
+
+            <a
+                    href="index.html"
+                    class="back-btn">
+
+                Back to Home
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+    <div class="footer-content">
+
+        <div class="logo">
+            🚆 Trainly
+        </div>
+
+
+        <p>
+            Your simple and reliable train booking system.
+        </p>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 Trainly. All rights reserved.
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script src="js/app.js"></script>
+
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const bookingData =
+                sessionStorage.getItem(
+                    "confirmedBooking"
+                );
+
+
+            // =====================================
+            // CHECK BOOKING DATA
+            // =====================================
+
+            if (!bookingData) {
+
+                console.error(
+                    "No confirmed booking data found."
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                const booking =
+                    JSON.parse(
+                        bookingData
+                    );
+
+
+                console.log(
+                    "Confirmed booking:",
+                    booking
+                );
+
+
+                // =================================
+                // BOOKING ID
+                // =================================
+
+                document
+                    .getElementById("bookingId")
+                    .textContent =
+                    booking.id || "-";
+
+
+                // =================================
+                // TRAIN
+                // =================================
+
+                document
+                    .getElementById("trainName")
+                    .textContent =
+                    booking.trainName || "-";
+
+
+                // =================================
+                // JOURNEY
+                // =================================
+
+                document
+                    .getElementById("journey")
+                    .textContent =
+                    booking.journey || "-";
+
+
+                // =================================
+                // TRAVEL DATE
+                // =================================
+
+                document
+                    .getElementById("travelDate")
+                    .textContent =
+                    formatConfirmationDate(
+                        booking.travelDate
+                    );
+
+
+                // =================================
+                // SEATS
+                // =================================
+
+                document
+                    .getElementById("selectedSeats")
+                    .textContent =
+                    booking.selectedSeats || "-";
+
+
+                // =================================
+                // PASSENGERS
+                // =================================
+
+                document
+                    .getElementById("passengerCount")
+                    .textContent =
+                    booking.passengerCount || "0";
+
+
+                // =================================
+                // TOTAL
+                // =================================
+
+                document
+                    .getElementById("totalAmount")
+                    .textContent =
+                    `Rs. ${(booking.totalAmount || 0).toLocaleString()}`;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading booking confirmation:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+
+    // =========================================
+    // FORMAT DATE
+    // =========================================
+
+    function formatConfirmationDate(
+        dateString
+    ) {
+
+        if (!dateString) {
+
+            return "-";
+
+        }
+
+
+        const date =
+            new Date(
+                dateString +
+                "T00:00:00"
+            );
+
+
+        return date.toLocaleDateString(
+            "en-US",
+            {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        );
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

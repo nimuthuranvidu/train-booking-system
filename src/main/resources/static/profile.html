@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Trainly - Profile</title>
+
+    <link
+            rel="stylesheet"
+            href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <span class="logo-icon">
+            🚆
+        </span>
+
+        <span>
+            Trainly
+        </span>
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="search-results.html">
+            Search
+        </a>
+
+        <a
+                href="profile.html"
+                class="active"
+        >
+            Profile
+        </a>
+
+    </nav>
+
+
+    <div class="nav-buttons">
+
+        <!-- app.js will update this -->
+
+        <a
+                href="login.html"
+                class="login-btn"
+        >
+            Login
+        </a>
+
+        <a
+                href="register.html"
+                class="register-btn"
+        >
+            Register
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<main class="profile-page">
+
+
+    <div class="profile-header">
+
+        <span class="hero-tag">
+            MY ACCOUNT
+        </span>
+
+        <h1>
+            My Profile
+        </h1>
+
+        <p>
+            Manage your Trainly account.
+        </p>
+
+    </div>
+
+
+
+    <section class="profile-card">
+
+
+        <div class="profile-avatar">
+
+            👤
+
+        </div>
+
+
+
+        <div class="profile-details">
+
+
+            <div class="profile-detail">
+
+                <span>
+                    Full Name
+                </span>
+
+                <strong id="profileName">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+
+            <div class="profile-detail">
+
+                <span>
+                    Email
+                </span>
+
+                <strong id="profileEmail">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+
+            <div class="profile-detail">
+
+                <span>
+                    Account Type
+                </span>
+
+                <strong id="profileRole">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <section class="profile-actions">
+
+
+        <a
+                href="my-bookings.html"
+                class="profile-action-card"
+        >
+
+            <span class="profile-action-icon">
+                🎫
+            </span>
+
+            <div>
+
+                <h3>
+                    My Bookings
+                </h3>
+
+                <p>
+                    View your train bookings.
+                </p>
+
+            </div>
+
+            <span class="profile-arrow">
+                →
+            </span>
+
+        </a>
+
+
+
+        <button
+                id="profileLogoutBtn"
+                class="profile-logout-card"
+        >
+
+            <span class="profile-action-icon">
+                🚪
+            </span>
+
+            <div>
+
+                <h3>
+                    Logout
+                </h3>
+
+                <p>
+                    Sign out of your Trainly account.
+                </p>
+
+            </div>
+
+            <span class="profile-arrow">
+                →
+            </span>
+
+        </button>
+
+
+    </section>
+
+
+</main>
+
+
+
+<footer>
+
+    <div class="footer-content">
+
+        <div class="logo">
+            🚆 Trainly
+        </div>
+
+        <p>
+            Your simple and reliable train booking system.
+        </p>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 Trainly. All rights reserved.
+
+    </div>
+
+</footer>
+
+
+
+<script src="js/app.js"></script>
+
+
+<script>
+
+    // ========================================
+    // CHECK LOGIN
+    // ========================================
+
+    const token =
+        localStorage.getItem("token");
+
+
+    if (!token) {
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+    // ========================================
+    // LOAD USER INFORMATION
+    // ========================================
+
+    const userName =
+        localStorage.getItem("userName");
+
+    const userEmail =
+        localStorage.getItem("userEmail");
+
+    const userRole =
+        localStorage.getItem("userRole");
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        userName || "Unknown";
+
+
+    document.getElementById(
+        "profileEmail"
+    ).textContent =
+        userEmail || "Unknown";
+
+
+    document.getElementById(
+        "profileRole"
+    ).textContent =
+        userRole || "CUSTOMER";
+
+
+    // ========================================
+    // PROFILE LOGOUT
+    // ========================================
+
+    document.getElementById(
+        "profileLogoutBtn"
+    ).addEventListener(
+        "click",
+        () => {
+
+            localStorage.removeItem(
+                "token"
+            );
+
+            localStorage.removeItem(
+                "userId"
+            );
+
+            localStorage.removeItem(
+                "userName"
+            );
+
+            localStorage.removeItem(
+                "userEmail"
+            );
+
+            localStorage.removeItem(
+                "userRole"
+            );
+
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

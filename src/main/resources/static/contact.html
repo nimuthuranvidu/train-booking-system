@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainly - Contact Us</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">
+        <span class="logo-icon">🚆</span>
+        <span>Trainly</span>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+    </nav>
+
+    <div class="nav-buttons">
+        <a href="login.html" class="login-btn">Login</a>
+    </div>
+</header>
+
+<main class="contact-page">
+
+    <section class="contact-hero">
+        <span class="hero-tag">WE'RE HERE TO HELP</span>
+        <h1>Get in Touch</h1>
+        <p>
+            Have a question about train schedules, bookings, or your account?
+            We'd love to hear from you.
+        </p>
+    </section>
+
+    <section class="contact-container">
+
+        <div class="contact-info">
+            <span class="contact-label">CONTACT INFORMATION</span>
+            <h2>Let's Talk</h2>
+
+            <p class="contact-description">
+                Need help with Trainly? Use the details below to contact our team.
+            </p>
+
+            <div class="contact-info-item">
+                <div class="contact-icon">✉️</div>
+                <div>
+                    <h3>Email Us</h3>
+                    <p>support@trainly.com</p>
+                </div>
+            </div>
+
+            <div class="contact-info-item">
+                <div class="contact-icon">📞</div>
+                <div>
+                    <h3>Call Us</h3>
+                    <p>+94 11 234 5678</p>
+                </div>
+            </div>
+
+            <div class="contact-info-item">
+                <div class="contact-icon">📍</div>
+                <div>
+                    <h3>Our Location</h3>
+                    <p>Sri Lanka</p>
+                </div>
+            </div>
+
+            <div class="contact-note">
+                <strong>Need booking assistance?</strong>
+                <p>
+                    Keep your booking reference ready when contacting us
+                    about an existing reservation.
+                </p>
+            </div>
+        </div>
+
+        <div class="contact-form-card">
+            <h2>Send Us a Message</h2>
+            <p class="contact-form-description">
+                Fill out the form below and tell us how we can help.
+            </p>
+
+            <form id="contactForm">
+
+                <div class="form-group">
+                    <label for="contactName">Full Name</label>
+                    <input type="text" id="contactName"
+                           placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail">Email Address</label>
+                    <input type="email" id="contactEmail"
+                           placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactSubject">Subject</label>
+                    <select id="contactSubject" required>
+                        <option value="">Select a subject</option>
+                        <option value="Booking Assistance">Booking Assistance</option>
+                        <option value="Train Schedule">Train Schedule</option>
+                        <option value="Account Support">Account Support</option>
+                        <option value="Payment Issue">Payment Issue</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactMessage">Message</label>
+                    <textarea id="contactMessage" rows="5"
+                              placeholder="How can we help you?" required></textarea>
+                </div>
+
+                <p id="contactFeedback" class="contact-feedback"
+                   role="status" aria-live="polite"></p>
+
+                <button type="submit" class="contact-submit-btn">
+                    Send Message
+                </button>
+
+            </form>
+        </div>
+
+    </section>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="logo">🚆 Trainly</div>
+        <p>Your simple and reliable train booking system.</p>
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Trainly. All rights reserved.
+    </div>
+</footer>
+
+<script src="js/contact.js"></script>
+
+</body>
+</html>

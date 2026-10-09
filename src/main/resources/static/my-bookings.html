@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Trainly - My Bookings</title>
+
+    <link
+            rel="stylesheet"
+            href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <span class="logo-icon">🚆</span>
+
+        <span>Trainly</span>
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="search-results.html">
+            Search
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+    </nav>
+
+
+    <div class="nav-buttons">
+
+        <a
+                href="login.html"
+                class="login-btn"
+        >
+            Login
+        </a>
+
+        <a
+                href="register.html"
+                class="register-btn"
+        >
+            Register
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<main class="bookings-page">
+
+
+    <div class="bookings-header">
+
+        <span class="hero-tag">
+            MY ACCOUNT
+        </span>
+
+
+        <h1>
+            My Bookings
+        </h1>
+
+
+        <p>
+            View your train booking history.
+        </p>
+
+    </div>
+
+
+
+    <div
+            id="bookingLoading"
+            class="loading"
+    >
+        Loading your bookings...
+    </div>
+
+
+    <div
+            id="bookingError"
+            class="error-message"
+    ></div>
+
+
+    <div
+            id="noBookings"
+            class="no-bookings"
+    >
+
+        <div class="no-bookings-icon">
+            🎫
+        </div>
+
+        <h2>
+            No Bookings Yet
+        </h2>
+
+        <p>
+            You haven't made any train bookings yet.
+        </p>
+
+        <a
+                href="index.html"
+                class="book-now-btn"
+        >
+            Book a Train
+        </a>
+
+    </div>
+
+
+    <div
+            id="bookingsContainer"
+            class="bookings-container"
+    ></div>
+
+
+</main>
+
+
+
+<footer>
+
+    <div class="footer-content">
+
+        <div class="logo">
+            🚆 Trainly
+        </div>
+
+        <p>
+            Your simple and reliable train booking system.
+        </p>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 Trainly. All rights reserved.
+
+    </div>
+
+</footer>
+
+
+
+<script src="js/app.js"></script>
+
+<script src="js/my-bookings.js"></script>
+
+
+</body>
+
+</html>

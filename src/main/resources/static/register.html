@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trainly - Register</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <span class="logo-icon">🚆</span>
+        <span>Trainly</span>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+    </nav>
+
+    <div class="nav-buttons">
+        <a href="login.html" class="login-btn">Login</a>
+    </div>
+
+</header>
+
+
+<main class="auth-page">
+
+    <div class="auth-card">
+
+        <div class="auth-header">
+
+            <span class="hero-tag">JOIN TRAINLY</span>
+
+            <h1>Create Account</h1>
+
+            <p>
+                Create your account to start booking train tickets.
+            </p>
+
+        </div>
+
+
+        <form id="registerForm">
+
+            <div class="form-group">
+
+                <label for="name">
+                    Full Name
+                </label>
+
+                <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"
+                        required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                        type="password"
+                        id="password"
+                        placeholder="Create a password"
+                        required
+                >
+
+            </div>
+
+
+            <div id="registerError" class="error-message"></div>
+
+            <div id="registerSuccess" class="success-message"></div>
+
+
+            <button
+                    type="submit"
+                    id="registerBtn"
+                    class="auth-submit-btn"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+
+        <div class="auth-footer">
+
+            <p>
+                Already have an account?
+                <a href="login.html">Login</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-content">
+
+        <div class="logo">
+            🚆 Trainly
+        </div>
+
+        <p>
+            Your simple and reliable train booking system.
+        </p>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Trainly. All rights reserved.
+    </div>
+
+</footer>
+
+
+<script src="js/register.js"></script>
+
+</body>
+</html>

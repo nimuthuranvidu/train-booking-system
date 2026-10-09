@@ -1,18 +1,90 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Trainly - Train Booking System</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <!-- TEST-HOMEPAGE-123 -->
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        header.navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            height: auto;
+            min-height: 75px;
+            overflow: visible;
+        }
+
+        header.navbar nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        header.navbar .nav-buttons {
+            display: flex !important;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+            min-width: 0;
+            overflow: visible;
+        }
+
+        header.navbar .nav-buttons #adminLoginButton {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 12px 16px;
+            background: #111c36 !important;
+            color: #ffffff !important;
+            border: 2px solid #2563eb;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.2;
+            text-decoration: none !important;
+            white-space: nowrap;
+            flex: 0 0 auto;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative;
+            z-index: 9999;
+        }
+
+        header.navbar .nav-buttons #adminLoginButton:hover {
+            background: #2563eb !important;
+        }
+
+        @media (max-width: 760px) {
+            header.navbar {
+                flex-wrap: wrap;
+            }
+
+            header.navbar nav {
+                flex-wrap: wrap;
+            }
+
+            header.navbar .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
-
+<!-- NAVBAR -->
 <header class="navbar">
 
     <div class="logo">
@@ -21,25 +93,27 @@
     </div>
 
     <nav>
-        <a href="index.html" class="active">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
+        <a href="/index.html" class="active">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
     </nav>
 
     <div class="nav-buttons">
-        <a href="#" class="login-btn">Login</a>
-        <a href="#" class="register-btn">Register</a>
+        <a href="/login.html" class="login-btn">Login</a>
+        <a href="/register.html" class="register-btn">Register</a>
+
+        <!-- ADMIN LOGIN BUTTON -->
+        <a href="/admin-login.html" id="adminLoginButton">
+            Admin Login
+        </a>
     </div>
 
 </header>
 
-
-<!-- ================= HERO ================= -->
-
+<!-- HERO -->
 <section class="hero">
 
     <div class="hero-content">
-
         <span class="hero-tag">YOUR JOURNEY STARTS HERE</span>
 
         <h1>
@@ -49,21 +123,15 @@
 
         <p>
             Book your train journey quickly and easily.
-            Find trains, choose your seats and enjoy a
-            comfortable journey.
+            Find trains, choose your seats and enjoy a comfortable journey.
         </p>
-
     </div>
 
-    <div class="hero-train">
-        🚆
-    </div>
+    <div class="hero-train">🚆</div>
 
 </section>
 
-
-<!-- ================= SEARCH CARD ================= -->
-
+<!-- SEARCH CARD -->
 <section class="search-section">
 
     <div class="search-card">
@@ -73,116 +141,45 @@
             <p>Search available trains for your journey</p>
         </div>
 
-
         <form id="searchForm">
 
             <div class="search-fields">
 
-                <!-- FROM -->
-
                 <div class="input-group">
-
-                    <label for="from">
-                        From
-                    </label>
+                    <label for="from">From</label>
 
                     <select id="from" required>
-
-                        <option value="">
-                            Select departure station
-                        </option>
-
-                        <option value="1">
-                            Colombo Fort
-                        </option>
-
-                        <option value="2">
-                            Kandy
-                        </option>
-
-                        <option value="3">
-                            Galle
-                        </option>
-
-                        <option value="4">
-                            Matara
-                        </option>
-
+                        <option value="">Select departure station</option>
+                        <option value="1">Colombo Fort</option>
+                        <option value="2">Kandy</option>
+                        <option value="3">Galle</option>
+                        <option value="4">Matara</option>
                     </select>
-
                 </div>
 
-
-                <!-- SWAP -->
-
-                <button
-                        type="button"
-                        class="swap-btn"
-                        id="swapBtn">
-
+                <button type="button" class="swap-btn" id="swapBtn">
                     ⇄
-
                 </button>
 
-
-                <!-- TO -->
-
                 <div class="input-group">
-
-                    <label for="to">
-                        To
-                    </label>
+                    <label for="to">To</label>
 
                     <select id="to" required>
-
-                        <option value="">
-                            Select destination station
-                        </option>
-
-                        <option value="1">
-                            Colombo Fort
-                        </option>
-
-                        <option value="2">
-                            Kandy
-                        </option>
-
-                        <option value="3">
-                            Galle
-                        </option>
-
-                        <option value="4">
-                            Matara
-                        </option>
-
+                        <option value="">Select destination station</option>
+                        <option value="1">Colombo Fort</option>
+                        <option value="2">Kandy</option>
+                        <option value="3">Galle</option>
+                        <option value="4">Matara</option>
                     </select>
-
                 </div>
 
-
-                <!-- DATE -->
-
                 <div class="input-group">
-
-                    <label for="travelDate">
-                        Travel Date
-                    </label>
-
-                    <input
-                            type="date"
-                            id="travelDate"
-                            required>
-
+                    <label for="travelDate">Travel Date</label>
+                    <input type="date" id="travelDate" required>
                 </div>
 
-
-                <!-- PASSENGERS -->
-
                 <div class="input-group">
-
-                    <label for="passengers">
-                        Passengers
-                    </label>
+                    <label for="passengers">Passengers</label>
 
                     <input
                             type="number"
@@ -190,19 +187,12 @@
                             min="1"
                             max="10"
                             value="1"
-                            required>
-
+                            required
+                    >
                 </div>
 
-
-                <!-- SEARCH -->
-
-                <button
-                        type="submit"
-                        class="search-btn">
-
+                <button type="submit" class="search-btn">
                     Search Trains
-
                 </button>
 
             </div>
@@ -213,116 +203,62 @@
 
 </section>
 
-
-<!-- ================= FEATURES ================= -->
-
+<!-- FEATURES -->
 <section class="features">
 
     <div class="section-title">
-
         <span>WHY CHOOSE TRAINLY</span>
-
-        <h2>
-            Everything You Need
-            For Your Journey
-        </h2>
-
+        <h2>Everything You Need For Your Journey</h2>
     </div>
-
 
     <div class="feature-grid">
 
-
         <div class="feature-card">
-
-            <div class="feature-icon">
-                🔎
-            </div>
-
-            <h3>
-                Easy Search
-            </h3>
-
+            <div class="feature-icon">🔎</div>
+            <h3>Easy Search</h3>
             <p>
-                Find available trains and schedules
-                quickly using our simple search.
+                Find available trains and schedules quickly
+                using our simple search.
             </p>
-
         </div>
 
-
         <div class="feature-card">
-
-            <div class="feature-icon">
-                💺
-            </div>
-
-            <h3>
-                Choose Your Seat
-            </h3>
-
+            <div class="feature-icon">💺</div>
+            <h3>Choose Your Seat</h3>
             <p>
-                Select your preferred seat and coach
-                before completing your booking.
+                Select your preferred seat and coach before
+                completing your booking.
             </p>
-
         </div>
 
-
         <div class="feature-card">
-
-            <div class="feature-icon">
-                🔐
-            </div>
-
-            <h3>
-                Secure Booking
-            </h3>
-
+            <div class="feature-icon">🔐</div>
+            <h3>Secure Booking</h3>
             <p>
-                Your account and booking information
-                are protected with secure authentication.
+                Your account and booking information are protected
+                with secure authentication.
             </p>
-
         </div>
 
-
         <div class="feature-card">
-
-            <div class="feature-icon">
-                📋
-            </div>
-
-            <h3>
-                Manage Bookings
-            </h3>
-
+            <div class="feature-icon">📋</div>
+            <h3>Manage Bookings</h3>
             <p>
-                View, manage and cancel your bookings
-                from your customer dashboard.
+                View, manage and cancel your bookings from
+                your customer dashboard.
             </p>
-
         </div>
 
     </div>
 
 </section>
 
-
-<!-- ================= FOOTER ================= -->
-
+<!-- FOOTER -->
 <footer>
 
     <div class="footer-content">
-
-        <div class="logo">
-            🚆 Trainly
-        </div>
-
-        <p>
-            Your simple and reliable train booking system.
-        </p>
-
+        <div class="logo">🚆 Trainly</div>
+        <p>Your simple and reliable train booking system.</p>
     </div>
 
     <div class="footer-bottom">
@@ -331,8 +267,7 @@
 
 </footer>
 
-
-<script src="js/app.js"></script>
+<script src="/js/app.js"></script>
 
 </body>
 </html>
